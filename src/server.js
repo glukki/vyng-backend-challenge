@@ -9,6 +9,7 @@ const populateUser = require('./middlewares/populateUser');
 
 const userRouter = require('./controllers/user');
 const channelRouter = require('./controllers/channel');
+const videoRouter = require('./controllers/video');
 
 const PORT = process.env.PORT || 5000;
 const { MONGO_USER, MONGO_PASSWORD, MONGO_URI } = process.env;
@@ -40,6 +41,7 @@ function createApp() {
   app.get('/', (req, res) => res.send('Hello world!'));
   app.use('/user', userRouter);
   app.use('/channel', channelRouter);
+  app.use('/video', videoRouter);
 
   // error handling middleware should go last
   app.use(mongooseExpressErrorHandler);

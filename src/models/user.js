@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Channel = require('./channel');
+const Video = require('./video');
 
 const { Schema } = mongoose;
 
@@ -23,6 +24,17 @@ UserSchema.methods.getChannels = function getChannels() {
 
 UserSchema.methods.createChannel = function createChannel(channelData) {
   return (new Channel(channelData))
+    .set('owner', this._id)
+    .save();
+};
+
+UserSchema.methods.getVideos = function getVideos() {
+  return Video.find({ owner: this._id })
+    .exec();
+};
+
+UserSchema.method.createVideo = function createVideo(videoData) {
+  return (new Video(videoData))
     .set('owner', this._id)
     .save();
 };

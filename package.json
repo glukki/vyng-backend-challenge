@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "express": "^4.16.4",
-    "forky": "^1.1.0"
+    "forky": "^1.1.0",
+    "mongoose": "^5.4.3"
   }
 }

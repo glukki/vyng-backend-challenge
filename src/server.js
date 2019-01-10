@@ -1,8 +1,10 @@
 const http = require('http');
 const forky = require('forky');
 const express = require('express');
+const mongoose = require('mongoose');
 
 const PORT = process.env.PORT || 5000;
+const { MONGO_USER, MONGO_PASSWORD, MONGO_URI } = process.env;
 
 async function start() {
   process
@@ -11,6 +13,10 @@ async function start() {
       return forky.disconnect();
     })
     .on('exit', () => console.log('exit'));
+
+  await mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_URI}`, {
+    useNewUrlParser: true,
+  });
 
   const app = express();
 

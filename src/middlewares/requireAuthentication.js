@@ -1,3 +1,6 @@
+/**
+ * Reject request if user not authorized
+ */
 function requireAuthentication(req, res, next) {
   const { user } = req;
 

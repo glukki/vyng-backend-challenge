@@ -1,6 +1,9 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
 
+/**
+ * Populate user if token present
+ */
 async function populateUser(req, res, next) {
   const { token } = req;
   if (!token || !token.user || !token.user._id) {

@@ -4,7 +4,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const mongooseExpressErrorHandler = require('mongoose-express-error-handler');
 
+const parseJwt = require('./middlewares/parseJwt');
+const populateUser = require('./middlewares/populateUser');
+
 const userRouter = require('./controllers/user');
+const channelRouter = require('./controllers/channel');
 
 const PORT = process.env.PORT || 5000;
 const { MONGO_USER, MONGO_PASSWORD, MONGO_URI } = process.env;
@@ -26,9 +30,16 @@ function expressErrorHandler(err, req, res, next) {
 function createApp() {
   const app = express();
 
+  // common middlewares
+  app.use([
+    parseJwt,
+    populateUser,
+  ]);
+
   // hook up request handlers
   app.get('/', (req, res) => res.send('Hello world!'));
   app.use('/user', userRouter);
+  app.use('/channel', channelRouter);
 
   // error handling middleware should go last
   app.use(mongooseExpressErrorHandler);
